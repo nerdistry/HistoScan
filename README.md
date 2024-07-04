@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="./images/histoscan-logo.png" alt="HistoScan Image" width="200">
+    <img src="/images/histoscan-logo.png" alt="HistoScan Image" width="200">
   <br>
   HistoScan
   <br>
