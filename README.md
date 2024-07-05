@@ -15,6 +15,7 @@
     <img src="https://img.shields.io/badge/Vue.js-4FC08D.svg?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue.js">
 </div>
 
+
 <p align="center">
   <a href="#overview">Overview</a> •
   <a href="#model-architecture">Model Architecture</a> •
@@ -54,6 +55,22 @@ HistoScan is designed to streamline cancer diagnostics through advanced computer
 This comprehensive approach not only improves the accuracy of cancer detection but also makes the tool accessible and easy to use for healthcare professionals.
 
 ---
+
+## Model Architecture
+
+The model base is a pretrained resnet34 model from [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+
+Resnet is a `Residual Learning Framework`, instead of optimizing weights that fit an underlying mapping, we optimize residual coefficients explain fit the same mapping.
+
+
+Reason: 
+  1.  won the 1st place in the ILSVRC2015 classification competition. 
+
+  2. 1st places on: ImageNet detection, ImageNet localization,
+  3. 1st place COCO detection, and COCO segmentation in ILSVRC &COCO 2015 competitions
+
+
+The architecture doesn't suffer from degradation problem present in deep plain neural nets, but actually gains more accuracy with more layers
 
 
 ## User Interface
@@ -128,6 +145,42 @@ Our endpoint looks like this, with the prediction and probability:
 **Request**: Multipart form data with an image file.
 **Response**: JSON containing the prediction and probability.
 
+## API Overview
+
+The api overview is explained below
+
+```text
+                                                                                                                                                                                                                                                                                                                     
+ ┌──────────────────┐        ┌──────────────────┐     ┌─────────────────────────────────────────────┐                            
+ │                  │        │                  │     │                                             │                            
+ │                  │        │                  │     │                                             │                            
+ │    IMAGE         │        │   Torch Model    │     │  {                                          │                            
+ │    Served Via    ├───────►│                  ├─────┤      "prediction": "No Cancer Detected",    │                            
+ │    REST API      │        │   1->Cancer      │     │      "probability": 0.10497161746025085     │                            
+ │                  │        │   0 -> No cancer │     │  }                                          │                            
+ │                  │        │                  │     │                                             │                            
+ │                  │        │                  │     │                                             │                            
+ └──────────────────┘        └──────────────────┘     └─────────────────────────────────────────────┘                                 
+```
+
+
+An image undergoes the following transofrmations to output
+Normalization uses `mean=[0.485, 0.456, 0.406]` and `std=[0.229, 0.224, 0.225]` (similar to the Resnet Model)
+
+```text
+                                                                                                               
+   ┌────────────────┐            ┌──────────────┐         ┌───────────────────┐       ┌─────────────────┐        
+   │                │            │              │         │                   │       │                 │        
+   │                │            │  TRANSFORM   │         │  PRETRAINED       │       │                 │        
+   │  IMAGE         │            │ - RESIZE (256)         │  MODEL            │       │  OUTPUT         │        
+   │                ├───────────►│              ┌─────────► - BASE (RESNET24) │       │                 │        
+   │                │            │ - TOTENSOR() │         │                   │       │                 │        
+   │                │            │ - NORMALIZE  │         │                   ├───────►                 │        
+   │                │            │              │         │                   │       │                 │        
+   └────────────────┘            └──────────────┘         └───────────────────┘       └─────────────────┘            
+```
+
+
 
 
 ---
@@ -138,4 +191,7 @@ Our endpoint looks like this, with the prediction and probability:
 > GitHub [@fanisheba](https://github.com/nerdistry) &nbsp;&middot;&nbsp;
 > GitHub [@etemesi254](https://github.com/etemesi254) &nbsp;&middot;&nbsp;
 > GitHub [@some-casual-coder](https://github.com/some-casual-coder) &nbsp;
+
+
+
 
