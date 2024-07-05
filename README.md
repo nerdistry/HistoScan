@@ -52,7 +52,7 @@ HistoScan is designed to streamline cancer diagnostics through advanced computer
 - **Deployment**: The trained model is served using Flask, providing a simple and efficient API for real-time predictions.
 - **User Interface**: Developed with Vue.js and Node.js, the UI allows users to upload images and receive instant diagnostic results.
 
-This comprehensive approach not only improves the accuracy of cancer detection but also makes the tool accessible and easy to use for healthcare professionals.
+This approach not only improves the accuracy of cancer detection but also makes the tool accessible and easy to use for healthcare professionals.
 
 
 
@@ -64,13 +64,12 @@ Resnet is a `Residual Learning Framework`, instead of optimizing weights that fi
 
 
 Reason: 
-  1.  won the 1st place in the ILSVRC2015 classification competition. 
+1. Won the 1st place in the ILSVRC2015 classification competition.
+2. 1st places on: ImageNet detection, ImageNet localization,
+3. 1st place COCO detection, and COCO segmentation in ILSVRC &COCO 2015 competitions
 
-  2. 1st places on: ImageNet detection, ImageNet localization,
-  3. 1st place COCO detection, and COCO segmentation in ILSVRC &COCO 2015 competitions
 
-
-The architecture doesn't suffer from degradation problem present in deep plain neural nets, but actually gains more accuracy with more layers
+The architecture doesn't suffer from degradation problem present in deep plain neural nets, but actually gains more accuracy with more layers.
 
 
 ## User Interface
