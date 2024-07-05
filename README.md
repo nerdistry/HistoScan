@@ -44,13 +44,16 @@ HistoScan is designed to streamline cancer diagnostics through advanced computer
 
 ### Key Components:
 - **Model**: Built on the ResNet-34 architecture (base model), fine-tuned for our specific use case, and trained using PyTorch.
+
 - **Techniques**:
   - **Data Augmentation**: Applied transformations like rotation, scaling, and flipping to increase data diversity.
   - **Transfer Learning**: Utilized a pre-trained ResNet-34 model and fine-tuned it for cancer detection.
   - **Image Preprocessing**: Included resizing, cropping, and normalizing images to ensure consistency.
   - **Binary Classification**: Classified images as cancerous or non-cancerous.
-- **Deployment**: The trained model is served using Flask, providing a simple and efficient API for real-time predictions.
-- **User Interface**: Developed with Vue.js and Node.js, the UI allows users to upload images and receive instant diagnostic results.
+
+- **Deployment**: The trained model is served using Python, providing a simple and efficient API for real-time predictions.
+
+- **User Interface**: Developed with Vue.js, the UI allows users to upload images and receive instant diagnostic results.
 
 This approach not only improves the accuracy of cancer detection but also makes the tool accessible and easy to use for healthcare professionals.
 
