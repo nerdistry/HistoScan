@@ -20,7 +20,7 @@
   <a href="#overview">Overview</a> •
   <a href="#model-architecture">Model Architecture</a> •
   <a href="#user-interface">User Interface</a> •
-  <a href="#api-endpoints">API Endpoints</a> •
+  <a href="#api-endpoint">API Endpoint</a> •
   <a href="#how-to-run">How To Run</a> •
   <a href="#contributions">Contributions</a>
 </p>
@@ -98,9 +98,9 @@ Our endpoint looks like this, with the prediction and probability:
 
 ![API Request](./images/api_request.jpg)
 
-**Description**: Endpoint to predict if an uploaded histopathologic image is cancerous.
-**Request**: Multipart form data with an image file.
-**Response**: JSON containing the prediction and probability.
+- **Description**: Endpoint to predict if an uploaded histopathologic image is cancerous.
+- **Request**: Multipart form data with an image file.
+- **Response**: JSON containing the prediction and probability.
 
 ### API Overview
 
