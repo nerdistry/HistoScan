@@ -20,8 +20,8 @@
   <a href="#overview">Overview</a> •
   <a href="#model-architecture">Model Architecture</a> •
   <a href="#user-interface">User Interface</a> •
-  <a href="#how-to-run">How To Run</a> •
   <a href="#api-endpoints">API Endpoints</a> •
+  <a href="#how-to-run">How To Run</a> •
   <a href="#contributions">Contributions</a>
 </p>
 
@@ -92,49 +92,6 @@ Here's how the interface looks like on our end:
 - **Performance**: The real-time processing capability ensures quick feedback, which is crucial in medical diagnostics.
 
 
-
-## How To Run
-
-To clone and run this application, you'll need the following tools installed on your computer:
-- [Git](https://git-scm.com)
-- [Python](https://www.python.org/)
-- [Node.js](https://nodejs.org/)
-
-### Step 1: Clone this repository
-```bash
-git clone https://github.com/yourusername/HistoScan.git
-```
-### Step 2: Navigate into the project directory
-```
-cd HistoScan/model
-```
-### Step 3: Install backend dependencies
-```
-pip install -r requirements.txt
-```
-### Step 4: Install frontend dependencies
-```
-cd user_interface
-```
-```
-npm install
-```
-### Step 5: Run the server
-```
-cd ..
-```
-```
-python serve.py
-```
-### Step 6: Run the Vue development server
-```
-cd user_interface
-```
-```
-npm run serve
-```
-
-
 ## API Endpoint
 
 Our endpoint looks like this, with the prediction and probability:
@@ -178,6 +135,48 @@ Normalization uses `mean=[0.485, 0.456, 0.406]` and `std=[0.229, 0.224, 0.225]` 
    │                │            │ - NORMALIZE  │         │                   ├───────►                 │        
    │                │            │              │         │                   │       │                 │        
    └────────────────┘            └──────────────┘         └───────────────────┘       └─────────────────┘            
+```
+
+
+## How To Run
+
+To clone and run this application, you'll need the following tools installed on your computer:
+- [Git](https://git-scm.com)
+- [Python](https://www.python.org/)
+- [Node.js](https://nodejs.org/)
+
+### Step 1: Clone this repository
+```bash
+git clone https://github.com/yourusername/HistoScan.git
+```
+### Step 2: Navigate into the project directory
+```
+cd HistoScan/model
+```
+### Step 3: Install backend dependencies
+```
+pip install -r requirements.txt
+```
+### Step 4: Install frontend dependencies
+```
+cd user_interface
+```
+```
+npm install
+```
+### Step 5: Run the server
+```
+cd ..
+```
+```
+python serve.py
+```
+### Step 6: Run the Vue development server
+```
+cd user_interface
+```
+```
+npm run serve
 ```
 
 
