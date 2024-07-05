@@ -16,6 +16,178 @@ export default defineComponent({
   }
 });
 </script>
+
+<script setup>
+import { ref, reactive, onMounted, onBeforeUnmount, watch } from 'vue'
+import axios from 'axios'
+
+const selectedFiles = reactive([])
+const isDragging = ref(false)
+const activeIndex = ref(0)
+const fileInput = ref(null)
+const SESSION_STORAGE_KEY = 'selectedFiles';
+const SESSION_EXPIRATION = 3 * 60 * 60 * 1000;
+// const SESSION_EXPIRATION = 10;
+
+watch(selectedFiles, (newFiles) => {
+  if (newFiles.length === 0) {
+    activeIndex.value = 0
+  } else if (activeIndex.value >= newFiles.length) {
+    activeIndex.value = newFiles.length - 1
+  }
+})
+
+const handleFileUpload = (event, index) => {
+  const file = event.target.files[0]
+  if (index === undefined) {
+    addNewFile(file)
+  } else {
+    selectedFiles[index].file = file
+    selectedFiles[index].imagePreview = URL.createObjectURL(file)
+    selectedFiles[index].uploaded = false
+    selectedFiles[index].prediction = ''
+    selectedFiles[index].probability = ''
+    selectedFiles[index].probabilityValue = 0
+  }
+}
+
+const handleDragOver = (event) => {
+  event.preventDefault()
+  isDragging.value = true
+}
+
+const handleDragLeave = (event) => {
+  event.preventDefault()
+  isDragging.value = false
+}
+
+const handleDrop = (event) => {
+  event.preventDefault()
+  isDragging.value = false
+  const files = event.dataTransfer.files
+  if (files.length > 0) {
+    addNewFile(files[0])
+  }
+}
+
+const handleNewFileSelection = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    addNewFile(file)
+  }
+}
+
+const addNewFile = (file = null) => {
+  selectedFiles.push({
+    file,
+    imagePreview: file ? URL.createObjectURL(file) : null,
+    uploaded: false,
+    isScanning: false,
+    isBouncing: false,
+    prediction: '',
+    probability: '',
+    probabilityValue: 0
+  })
+  activeIndex.value = selectedFiles.length - 1
+  saveFilesToSessionStorage();
+  if (file) {
+    triggerBounceAnimation(activeIndex.value);
+  }
+}
+
+const triggerBounceAnimation = (index) => {
+  const file = selectedFiles[index];
+  file.isBouncing = true;
+
+  setTimeout(() => {
+    file.isBouncing = false;
+  }, 1000);
+}
+
+const uploadImage = async (index) => {
+  const selectedFile = selectedFiles[index]
+  if (!selectedFile.file) {
+    return
+  }
+
+  const formData = new FormData()
+  console.log(selectedFile.file)
+  formData.append('image', selectedFile.file)
+
+  try {
+    selectedFile.isScanning = true
+    // const response = await axios.post('/api/upload', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // });
+    // if (response.status !== 200) {
+    //   throw new Error(`HTTP error! status: ${response.status}`);
+    // }
+
+    const scanningDuration = 5000
+    const scanningStart = Date.now()
+
+    await new Promise((resolve) => setTimeout(resolve, scanningDuration))
+
+    const elapsedTime = Date.now() - scanningStart
+    if (elapsedTime < scanningDuration) {
+      await new Promise((resolve) => setTimeout(resolve, scanningDuration - elapsedTime))
+    }
+
+    selectedFile.prediction = `No Breast Cancer Detected`
+    selectedFile.probability = `90% probability`
+    selectedFile.probabilityValue = 0.6
+    // selectedFile.probabilityValue = response.probability;
+    // selectedFile.prediction = response.prediction;
+    // selectedFile.probability = `${response.probability}% probability`;
+    selectedFile.uploaded = true
+  } catch (error) {
+    console.error('Error uploading image:', error)
+  } finally {
+    selectedFile.isScanning = false
+    saveFilesToSessionStorage()
+  }
+}
+
+const deleteFile = (index) => {
+  selectedFiles.splice(index, 1)
+  saveFilesToSessionStorage()
+}
+
+const saveFilesToSessionStorage = () => {
+  sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(selectedFiles));
+  sessionStorage.setItem(`${SESSION_STORAGE_KEY}_timestamp`, new Date().getTime());
+  // sessionStorage.setItem('selectedFiles', JSON.stringify(selectedFiles))
+}
+
+const retrieveFilesFromSessionStorage = () => {
+  const storedFiles = JSON.parse(sessionStorage.getItem(SESSION_STORAGE_KEY));
+  const storedTimestamp = sessionStorage.getItem(`${SESSION_STORAGE_KEY}_timestamp`);
+  const currentTimestamp = new Date().getTime();
+
+  if (storedFiles && storedTimestamp && (currentTimestamp - parseInt(storedTimestamp, 10)) < SESSION_EXPIRATION) {
+    selectedFiles.splice(0, selectedFiles.length, ...storedFiles);
+  } else {
+    sessionStorage.removeItem(SESSION_STORAGE_KEY);
+    sessionStorage.removeItem(`${SESSION_STORAGE_KEY}_timestamp`);
+  }
+
+  // const storedFiles = sessionStorage.getItem('selectedFiles')
+  // if (storedFiles) {
+  //   selectedFiles.splice(0, selectedFiles.length, ...JSON.parse(storedFiles))
+  // }
+}
+
+onMounted(() => {
+  retrieveFilesFromSessionStorage()
+})
+
+onBeforeUnmount(() => {
+  saveFilesToSessionStorage()
+})
+</script>
+
 <template>
     <div class="container">
       <div v-if="selectedFiles.length === 0" class="drop-zone" @dragover="handleDragOver" @dragleave="handleDragLeave"
