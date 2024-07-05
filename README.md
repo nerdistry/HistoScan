@@ -82,7 +82,7 @@ Here's how the interface looks like on our end:
 
 ### Technologies Used
 - **Frontend**: Built with Vue.js to provide a dynamic and responsive user experience.
-- **Backend**: Node.js was used to handle server-side operations and facilitate communication between the frontend and the model.
+- **API Connection**: Done using the Axios library.
 
 ### Features
 - **Image Upload**: Users can upload histopathologic images via the UI.
