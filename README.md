@@ -29,7 +29,7 @@
 
 ## Overview
 
-HistoScan is designed to streamline cancer diagnostics through advanced computer vision techniques. We have utilized the power of deep learning; our model is trained to accurately detect and classify cancerous tissues in histopathologic images. We used the Histopathologic Cancer Detection dataset from Kaggle,<a href = "https://www.kaggle.com/competitions/histopathologic-cancer-detection/data"> here </a>it is. This ensures a robust and diverse training set.
+HistoScan is designed to streamline cancer diagnostics through advanced computer vision techniques. We have utilized the power of deep learning; our model is trained to accurately detect and classify cancerous tissues in histopathologic images. We used the Histopathologic Cancer Detection dataset from Kaggle, <a href = "https://www.kaggle.com/competitions/histopathologic-cancer-detection/data">here</a> it is. This ensures a robust and diverse training set.
 1. **The Problem**:
    - Manual Analysis: Time-consuming and prone to error.
    - High Volume of Data: Overwhelms healthcare professionals.
