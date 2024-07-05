@@ -20,12 +20,12 @@
   <a href="#overview">Overview</a> •
   <a href="#model-architecture">Model Architecture</a> •
   <a href="#user-interface">User Interface</a> •
+  <a href="#api-endpoint">API Endpoint</a> •
   <a href="#how-to-run">How To Run</a> •
-  <a href="#api-endpoints">API Endpoints</a> •
   <a href="#contributions">Contributions</a>
 </p>
 
----
+
 
 ## Overview
 
@@ -54,7 +54,7 @@ HistoScan is designed to streamline cancer diagnostics through advanced computer
 
 This comprehensive approach not only improves the accuracy of cancer detection but also makes the tool accessible and easy to use for healthcare professionals.
 
----
+
 
 ## Model Architecture
 
@@ -91,7 +91,52 @@ Here's how the interface looks like on our end:
 - **User Experience**: The interface is designed to be intuitive, ensuring ease of use for healthcare professionals.
 - **Performance**: The real-time processing capability ensures quick feedback, which is crucial in medical diagnostics.
 
----
+
+## API Endpoint
+
+Our endpoint looks like this, with the prediction and probability:
+
+![API Request](./images/api_request.jpg)
+
+- **Description**: Endpoint to predict if an uploaded histopathologic image is cancerous.
+- **Request**: Multipart form data with an image file.
+- **Response**: JSON containing the prediction and probability.
+
+### API Overview
+
+The api overview is explained below
+
+```text
+                                                                                                                                                                                                                                                                                                                     
+ ┌──────────────────┐        ┌──────────────────┐     ┌─────────────────────────────────────────────┐                            
+ │                  │        │                  │     │                                             │                            
+ │                  │        │                  │     │                                             │                            
+ │    IMAGE         │        │   Torch Model    │     │  {                                          │                            
+ │    Served Via    ├───────►│                  ├─────┤      "prediction": "No Cancer Detected",    │                            
+ │    REST API      │        │   1->Cancer      │     │      "probability": 0.10497161746025085     │                            
+ │                  │        │   0 -> No cancer │     │  }                                          │                            
+ │                  │        │                  │     │                                             │                            
+ │                  │        │                  │     │                                             │                            
+ └──────────────────┘        └──────────────────┘     └─────────────────────────────────────────────┘                                 
+```
+
+
+An image undergoes the following transofrmations to output
+Normalization uses `mean=[0.485, 0.456, 0.406]` and `std=[0.229, 0.224, 0.225]` (similar to the Resnet Model)
+
+```text
+                                                                                                               
+   ┌────────────────┐            ┌──────────────┐         ┌───────────────────┐       ┌─────────────────┐        
+   │                │            │              │         │                   │       │                 │        
+   │                │            │  TRANSFORM   │         │  PRETRAINED       │       │                 │        
+   │  IMAGE         │            │ - RESIZE (256)         │  MODEL            │       │  OUTPUT         │        
+   │                ├───────────►│              ┌─────────► - BASE (RESNET24) │       │                 │        
+   │                │            │ - TOTENSOR() │         │                   │       │                 │        
+   │                │            │ - NORMALIZE  │         │                   ├───────►                 │        
+   │                │            │              │         │                   │       │                 │        
+   └────────────────┘            └──────────────┘         └───────────────────┘       └─────────────────┘            
+```
+
 
 ## How To Run
 
@@ -135,55 +180,7 @@ npm run serve
 ```
 
 
-## API Endpoint
 
-Our endpoint looks like this, with the prediction and probability:
-
-![API Request](./images/api_request.jpg)
-
-**Description**: Endpoint to predict if an uploaded histopathologic image is cancerous.
-**Request**: Multipart form data with an image file.
-**Response**: JSON containing the prediction and probability.
-
-## API Overview
-
-The api overview is explained below
-
-```text
-                                                                                                                                                                                                                                                                                                                     
- ┌──────────────────┐        ┌──────────────────┐     ┌─────────────────────────────────────────────┐                            
- │                  │        │                  │     │                                             │                            
- │                  │        │                  │     │                                             │                            
- │    IMAGE         │        │   Torch Model    │     │  {                                          │                            
- │    Served Via    ├───────►│                  ├─────┤      "prediction": "No Cancer Detected",    │                            
- │    REST API      │        │   1->Cancer      │     │      "probability": 0.10497161746025085     │                            
- │                  │        │   0 -> No cancer │     │  }                                          │                            
- │                  │        │                  │     │                                             │                            
- │                  │        │                  │     │                                             │                            
- └──────────────────┘        └──────────────────┘     └─────────────────────────────────────────────┘                                 
-```
-
-
-An image undergoes the following transofrmations to output
-Normalization uses `mean=[0.485, 0.456, 0.406]` and `std=[0.229, 0.224, 0.225]` (similar to the Resnet Model)
-
-```text
-                                                                                                               
-   ┌────────────────┐            ┌──────────────┐         ┌───────────────────┐       ┌─────────────────┐        
-   │                │            │              │         │                   │       │                 │        
-   │                │            │  TRANSFORM   │         │  PRETRAINED       │       │                 │        
-   │  IMAGE         │            │ - RESIZE (256)         │  MODEL            │       │  OUTPUT         │        
-   │                ├───────────►│              ┌─────────► - BASE (RESNET24) │       │                 │        
-   │                │            │ - TOTENSOR() │         │                   │       │                 │        
-   │                │            │ - NORMALIZE  │         │                   ├───────►                 │        
-   │                │            │              │         │                   │       │                 │        
-   └────────────────┘            └──────────────┘         └───────────────────┘       └─────────────────┘            
-```
-
-
-
-
----
 ## Contributions
 
 
