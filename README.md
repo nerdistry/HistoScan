@@ -25,7 +25,7 @@
   <a href="#contributions">Contributions</a>
 </p>
 
----
+
 
 ## Overview
 
@@ -54,7 +54,7 @@ HistoScan is designed to streamline cancer diagnostics through advanced computer
 
 This comprehensive approach not only improves the accuracy of cancer detection but also makes the tool accessible and easy to use for healthcare professionals.
 
----
+
 
 ## Model Architecture
 
@@ -91,7 +91,7 @@ Here's how the interface looks like on our end:
 - **User Experience**: The interface is designed to be intuitive, ensuring ease of use for healthcare professionals.
 - **Performance**: The real-time processing capability ensures quick feedback, which is crucial in medical diagnostics.
 
----
+
 
 ## How To Run
 
@@ -145,7 +145,7 @@ Our endpoint looks like this, with the prediction and probability:
 **Request**: Multipart form data with an image file.
 **Response**: JSON containing the prediction and probability.
 
-## API Overview
+### API Overview
 
 The api overview is explained below
 
@@ -182,8 +182,6 @@ Normalization uses `mean=[0.485, 0.456, 0.406]` and `std=[0.229, 0.224, 0.225]` 
 
 
 
-
----
 ## Contributions
 
 
