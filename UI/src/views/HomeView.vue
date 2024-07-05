@@ -1,3 +1,21 @@
+<script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'HomeView',
+  methods: {
+    getProbabilityClass(probability) {
+      if (probability > 0.8) {
+        return 'bg-light-green';
+      } else if (probability > 0.5) {
+        return 'bg-light-yellow';
+      } else {
+        return 'bg-light-red';
+      }
+    }
+  }
+});
+</script>
 <template>
     <div class="container">
       <div v-if="selectedFiles.length === 0" class="drop-zone" @dragover="handleDragOver" @dragleave="handleDragLeave"
