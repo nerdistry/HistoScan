@@ -138,8 +138,8 @@ const uploadImage = async (index) => {
         selectedFile.prediction = `No Breast Cancer Detected`
         selectedFile.probability = `90% probability`
         selectedFile.probabilityValue = 0.6
-        // selectedFile.probabilityValue = response.probability;
-        // selectedFile.prediction = response.prediction;
+        // selectedFile.probabilityValue = response.data.probability;
+        // selectedFile.prediction = response.data.prediction;
         // selectedFile.probability = `${response.probability}% probability`;
         selectedFile.uploaded = true
     } catch (error) {
@@ -225,7 +225,7 @@ onBeforeUnmount(() => {
                 <div class="buttons">
                     <p>
                         Simply upload your mammogram and let our advanced AI tool help detect potential signs of
-                        breast cancer
+                         cancer
                     </p>
                     <div v-if="selectedFiles[activeIndex].prediction" class="prediction-message">
                         <p>{{ selectedFiles[activeIndex].prediction }}</p>
@@ -446,7 +446,7 @@ onBeforeUnmount(() => {
     }
 
     & button {
-        background-color: #181818;
+        background-color: transparent;
         border: 3px solid #42b883;
         color: #42b883;
         padding: 8px 40px;
